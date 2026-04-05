@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="900" viewBox="0 0 640 900">
+  <rect width="640" height="900" fill="#222831"/>
+  <rect x="44" y="44" width="552" height="812" rx="18" fill="#2D3643" stroke="#8A97AA" stroke-opacity="0.5"/>
+  <text x="72" y="170" fill="#F1F6FF" font-size="54" font-family="Segoe UI, Arial" font-weight="700">Observability</text>
+  <text x="72" y="236" fill="#F1F6FF" font-size="54" font-family="Segoe UI, Arial" font-weight="700">Playbook</text>
+  <text x="72" y="305" fill="#D3DBEA" font-size="25" font-family="Segoe UI, Arial">Logs, metrics, traces and SLOs</text>
+  <polyline points="90,650 180,560 250,600 340,490 430,520 520,420" fill="none" stroke="#3FC1C9" stroke-width="8"/>
+  <circle cx="520" cy="420" r="13" fill="#3FC1C9"/>
+  <text x="72" y="800" fill="#D8E5F7" font-size="22" font-family="Segoe UI, Arial">run your platform with confidence</text>
+</svg>

@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Manrope', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-full bg-gradient-to-r from-brandCyan to-brandCoral px-4 py-2 font-heading text-sm font-bold text-white transition duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brandCyan/40 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center rounded-full border border-textStrong/15 bg-textStrong/5 px-4 py-2 font-heading text-sm font-bold text-textStrong transition duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brandCyan/40 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .field {
+    @apply mt-1.5 w-full rounded-xl border border-lineStrong bg-white px-3 py-2.5 text-textStrong shadow-sm transition focus:border-brandCyan focus:outline-none focus:ring-4 focus:ring-brandCyan/15;
+  }
+
+  .card-surface {
+    @apply rounded-2xl border border-lineSoft bg-white/95 p-4 shadow-card;
+  }
+}

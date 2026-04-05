@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="900" viewBox="0 0 640 900">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#123A5A" />
+      <stop offset="100%" stop-color="#26A4B5" />
+    </linearGradient>
+  </defs>
+  <rect width="640" height="900" fill="url(#g1)"/>
+  <rect x="36" y="36" width="568" height="828" rx="24" fill="none" stroke="#BFEAF4" stroke-opacity="0.45" stroke-width="2"/>
+  <text x="56" y="130" fill="#EAF9FF" font-size="34" font-family="Segoe UI, Arial" letter-spacing="1">BOOK OPS SERIES</text>
+  <text x="56" y="290" fill="#FFFFFF" font-size="62" font-family="Segoe UI, Arial" font-weight="700">Microservices</text>
+  <text x="56" y="365" fill="#FFFFFF" font-size="62" font-family="Segoe UI, Arial" font-weight="700">Patterns</text>
+  <text x="56" y="452" fill="#D6F4FF" font-size="28" font-family="Segoe UI, Arial">Practical decomposition and integration</text>
+  <circle cx="520" cy="690" r="84" fill="#F08B4C" fill-opacity="0.9"/>
+  <text x="56" y="820" fill="#EAF9FF" font-size="24" font-family="Segoe UI, Arial">By Platform Architecture Team</text>
+</svg>

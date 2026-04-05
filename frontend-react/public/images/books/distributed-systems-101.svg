@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="900" viewBox="0 0 640 900">
+  <defs>
+    <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3E2A5C"/>
+      <stop offset="100%" stop-color="#6C4FA6"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="900" fill="url(#g2)"/>
+  <rect x="56" y="56" width="528" height="788" rx="18" fill="rgba(255,255,255,0.06)" stroke="#DCCBFF" stroke-opacity="0.5"/>
+  <text x="80" y="170" fill="#F6EDFF" font-size="56" font-family="Georgia, serif" font-weight="700">Distributed</text>
+  <text x="80" y="236" fill="#F6EDFF" font-size="56" font-family="Georgia, serif" font-weight="700">Systems 101</text>
+  <text x="80" y="310" fill="#E4D6FF" font-size="26" font-family="Segoe UI, Arial">Foundations for scalable platforms</text>
+  <path d="M90 620 C180 540, 300 700, 400 610 C470 550, 520 570, 560 630" stroke="#F08B4C" stroke-width="8" fill="none"/>
+  <text x="80" y="800" fill="#E4D6FF" font-size="23" font-family="Segoe UI, Arial">Seminar Edition</text>
+</svg>

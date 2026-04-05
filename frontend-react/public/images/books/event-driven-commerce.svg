@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="900" viewBox="0 0 640 900">
+  <rect width="640" height="900" fill="#1A3E2E"/>
+  <rect x="24" y="24" width="592" height="852" rx="28" fill="#245A42"/>
+  <text x="60" y="180" fill="#E8FFF3" font-size="58" font-family="Segoe UI, Arial" font-weight="700">Event-Driven</text>
+  <text x="60" y="252" fill="#E8FFF3" font-size="58" font-family="Segoe UI, Arial" font-weight="700">Commerce</text>
+  <text x="60" y="322" fill="#CBF5DE" font-size="27" font-family="Segoe UI, Arial">From checkout to delivery pipeline</text>
+  <g transform="translate(62,460)">
+    <rect width="120" height="60" rx="10" fill="#9CE5BE"/>
+    <rect x="170" width="120" height="60" rx="10" fill="#78DDAA"/>
+    <rect x="340" width="120" height="60" rx="10" fill="#57CA94"/>
+    <path d="M128 30 H160 M298 30 H330" stroke="#E8FFF3" stroke-width="6"/>
+  </g>
+  <text x="60" y="800" fill="#D5FFEA" font-size="22" font-family="Segoe UI, Arial">queue first, coupling last</text>
+</svg>
