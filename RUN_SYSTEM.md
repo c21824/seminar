@@ -12,6 +12,7 @@ docker compose up -d --build
 
 Lenh tren se build va chay:
 - 11 backend service Django
+- 1 AI chat service FastAPI
 - 1 API Gateway Django
 - 1 frontend React
 - PostgreSQL, RabbitMQ, Redis
@@ -50,8 +51,8 @@ curl http://localhost:8000/api/v1/services-health/
 ```
 
 Mong doi:
-- healthy = 11
-- total = 11
+- healthy = 12
+- total = 12
 
 ### 4.4 Mo giao dien web
 - Frontend dashboard: http://localhost:5173
@@ -68,6 +69,12 @@ Invoke-RestMethod -Uri 'http://localhost:8000/api/v1/proxy/book-service/books/' 
 ### 5.2 Lay danh sach sach
 ```bash
 curl http://localhost:8000/api/v1/proxy/book-service/books/
+```
+
+### 5.3 Test chat recommendation qua gateway
+```powershell
+$body = '{"user_id":"u_1024","question":"Toi nen doc sach gi?","top_k":3}'
+Invoke-RestMethod -Uri 'http://localhost:8000/api/v1/proxy/chat-service/chat/recommend/' -Method Post -ContentType 'application/json' -Body $body
 ```
 
 ## 6. Xem logs khi co loi

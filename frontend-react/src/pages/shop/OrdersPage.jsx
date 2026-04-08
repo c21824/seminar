@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import PageHeader from '../../components/PageHeader'
 import EmptyState from '../../components/ui/EmptyState'
 import Pagination from '../../components/ui/Pagination'
 import Spinner from '../../components/ui/Spinner'
@@ -12,6 +11,8 @@ export default function OrdersPage() {
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
+
+  const statusPool = ['Processing', 'Packing', 'In transit', 'Delivered']
 
   const totalPages = Math.max(1, Math.ceil(orders.length / PAGE_SIZE))
   const pagedOrders = useMemo(() => {
@@ -38,8 +39,15 @@ export default function OrdersPage() {
   }, [])
 
   return (
-    <>
-      <PageHeader title="My Orders" subtitle="Order list from order-service." />
+    <div className="storefront-stack">
+      <section className="storefront-section-head compact">
+        <div>
+          <p className="storefront-kicker">Orders</p>
+          <h1>Track your purchases in one place.</h1>
+          <p>Check fulfillment status and open detail timeline for each order.</p>
+        </div>
+      </section>
+
       {loading ? <Spinner label="Loading your orders..." /> : null}
       {!loading && orders.length === 0 ? (
         <EmptyState
@@ -49,31 +57,24 @@ export default function OrdersPage() {
       ) : null}
 
       {!loading && orders.length > 0 ? (
-      <section className="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {pagedOrders.map((order) => (
-              <tr key={order.id}>
-                <td>{order.id}</td>
-                <td>{order.name}</td>
-                <td>{order.description || '-'}</td>
-                <td>
-                  <Link className="link-inline" to={`/customer/orders/${order.id}`}>
-                    Track
-                  </Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <section className="orders-grid">
+        {pagedOrders.map((order) => {
+          const status = statusPool[Number(order.id) % statusPool.length]
+          return (
+            <article key={order.id} className="order-card">
+              <p className="storefront-chip">Order #{order.id}</p>
+              <h3>{order.name}</h3>
+              <p>{order.description || 'No extra description provided.'}</p>
+              <div className="order-card-footer">
+                <span className="order-status">{status}</span>
+                <Link className="storefront-cta compact" to={`/customer/orders/${order.id}`}>
+                  View timeline
+                </Link>
+              </div>
+            </article>
+          )
+        })}
+
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
@@ -83,6 +84,6 @@ export default function OrdersPage() {
         />
       </section>
       ) : null}
-    </>
+    </div>
   )
 }

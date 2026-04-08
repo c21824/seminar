@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import PageHeader from '../../components/PageHeader'
 import Button from '../../components/ui/Button'
 import EmptyState from '../../components/ui/EmptyState'
 import Spinner from '../../components/ui/Spinner'
@@ -39,39 +38,45 @@ export default function BookDetailPage() {
 
   if (!book) {
     return (
-      <>
-        <PageHeader title="Book Detail" subtitle="No book found for this ID." />
+      <div className="storefront-stack">
+        <section className="storefront-section-head compact">
+          <div>
+            <p className="storefront-kicker">Book detail</p>
+            <h1>No book found</h1>
+          </div>
+        </section>
         <EmptyState
           title="Book not found"
           message="The selected item may have been removed or does not exist."
           actionLabel="Back to Catalog"
           onAction={() => navigate('/customer/catalog')}
         />
-      </>
+      </div>
     )
   }
 
   return (
-    <>
-      <PageHeader title={book.name} subtitle="Book detail and buying context." />
-      <section className="panel-grid">
-        <article className="panel">
-          <h3>Cover</h3>
+    <div className="storefront-stack">
+      <section className="storefront-section-head compact">
+        <div>
+          <p className="storefront-kicker">Book detail</p>
+          <h1>{book.name}</h1>
+          <p>Review details and add this title to your cart.</p>
+        </div>
+      </section>
+      <section className="book-detail-layout">
+        <article className="book-detail-card">
           {getBookCover(book) ? (
             <img className="cover-large" src={getBookCover(book)} alt={book.name} />
           ) : (
             <p>No cover image available.</p>
           )}
         </article>
-        <article className="panel">
+        <article className="book-detail-card">
           <h3>Overview</h3>
           <p><strong>Catalog:</strong> {getBookCatalog(book) || '-'}</p>
           <p><strong>Price:</strong> {getBookPrice(book) ? `$${getBookPrice(book)}` : '-'}</p>
           <p>{cleanDescription(book.description) || 'No description available.'}</p>
-        </article>
-        <article className="panel">
-          <h3>Actions</h3>
-          <p>Add this book to cart and continue checkout when ready.</p>
           <div className="actions-row">
             <Button onClick={handleAddToCart}>Add to Cart</Button>
             <Button variant="ghost" onClick={() => navigate('/customer/cart')}>
@@ -80,6 +85,6 @@ export default function BookDetailPage() {
           </div>
         </article>
       </section>
-    </>
+    </div>
   )
 }

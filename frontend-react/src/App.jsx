@@ -1,8 +1,9 @@
 import React from 'react'
 import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import AppShell from './components/AppShell'
+import CustomerShell from './components/CustomerShell'
 import LoginPage from './pages/auth/LoginPage'
-import ShopHomePage from './pages/shop/ShopHomePage'
+import HomeBooksPage from './pages/shop/HomeBooksPage'
 import CatalogPage from './pages/shop/CatalogPage'
 import BookDetailPage from './pages/shop/BookDetailPage'
 import CartPage from './pages/shop/CartPage'
@@ -11,6 +12,7 @@ import PaymentResultPage from './pages/shop/PaymentResultPage'
 import OrdersPage from './pages/shop/OrdersPage'
 import OrderDetailPage from './pages/shop/OrderDetailPage'
 import ReviewsPage from './pages/shop/ReviewsPage'
+import ChatSupportPage from './pages/shop/ChatSupportPage'
 import BooksManagementPage from './pages/staff/BooksManagementPage'
 import CatalogManagementPage from './pages/staff/CatalogManagementPage'
 import OrdersManagementPage from './pages/staff/OrdersManagementPage'
@@ -56,12 +58,12 @@ const router = createBrowserRouter([
     path: '/customer',
     element: (
       <RequireRole roles={['customer']}>
-        <AppShell role="customer" />
+        <CustomerShell />
       </RequireRole>
     ),
     children: [
       { index: true, element: <Navigate to="/customer/home" replace /> },
-      { path: 'home', element: <ShopHomePage /> },
+      { path: 'home', element: <HomeBooksPage /> },
       { path: 'catalog', element: <CatalogPage /> },
       { path: 'books/:id', element: <BookDetailPage /> },
       { path: 'cart', element: <CartPage /> },
@@ -70,6 +72,7 @@ const router = createBrowserRouter([
       { path: 'orders', element: <OrdersPage /> },
       { path: 'orders/:id', element: <OrderDetailPage /> },
       { path: 'reviews', element: <ReviewsPage /> },
+      { path: 'chat', element: <ChatSupportPage /> },
     ],
   },
   {

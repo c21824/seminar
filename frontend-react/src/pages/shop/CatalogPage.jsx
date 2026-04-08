@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
-import PageHeader from '../../components/PageHeader'
+import { Link, useSearchParams } from 'react-router-dom'
 import EmptyState from '../../components/ui/EmptyState'
 import Input from '../../components/ui/Input'
 import Pagination from '../../components/ui/Pagination'
@@ -11,9 +10,10 @@ import { cleanDescription, getBookCatalog, getBookCover, getBookPrice } from '..
 const PAGE_SIZE = 5
 
 export default function CatalogPage() {
+  const [searchParams] = useSearchParams()
   const [books, setBooks] = useState([])
   const [catalogItems, setCatalogItems] = useState([])
-  const [query, setQuery] = useState('')
+  const [query, setQuery] = useState(() => searchParams.get('q') || '')
   const [catalogFilter, setCatalogFilter] = useState('all')
   const [currentPage, setCurrentPage] = useState(1)
   const [loading, setLoading] = useState(true)
@@ -47,7 +47,11 @@ export default function CatalogPage() {
     }
 
     const keyword = query.toLowerCase()
-    return rows.filter((book) => book.name.toLowerCase().includes(keyword))
+    return rows.filter((book) => {
+      const name = String(book.name || '').toLowerCase()
+      const description = cleanDescription(book.description).toLowerCase()
+      return name.includes(keyword) || description.includes(keyword)
+    })
   }, [books, query, catalogFilter])
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
@@ -67,27 +71,29 @@ export default function CatalogPage() {
   }, [currentPage, totalPages])
 
   return (
-    <>
-      <PageHeader
-        title="Catalog"
-        subtitle="Search available books from book-service."
-        right={
-          <div className="actions-row">
-            <Input
-              className="search"
-              placeholder="Search books"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-            />
-            <select className="field search" value={catalogFilter} onChange={(event) => setCatalogFilter(event.target.value)}>
-              <option value="all">All catalogs</option>
-              {catalogItems.map((item) => (
-                <option key={item.id} value={item.name}>{item.name}</option>
-              ))}
-            </select>
-          </div>
-        }
-      />
+    <div className="storefront-stack catalog-page">
+      <section className="storefront-section-head">
+        <div>
+          <p className="storefront-kicker">Catalog</p>
+          <h1>Explore books by topic and price.</h1>
+          <p>Find titles quickly using keyword search and category filters.</p>
+        </div>
+        <div className="storefront-filter-box">
+          <Input
+            className="search"
+            placeholder="Search title or keyword"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+          />
+          <select className="field search" value={catalogFilter} onChange={(event) => setCatalogFilter(event.target.value)}>
+            <option value="all">All catalogs</option>
+            {catalogItems.map((item) => (
+              <option key={item.id} value={item.name}>{item.name}</option>
+            ))}
+          </select>
+        </div>
+      </section>
+
       {loading ? <Spinner label="Loading catalog..." /> : null}
       {!loading && error ? <p className="form-error">{error}</p> : null}
       {!loading && !error && filtered.length === 0 ? (
@@ -99,47 +105,33 @@ export default function CatalogPage() {
 
       {!loading && !error && filtered.length > 0 ? (
       <>
-        <section className="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Cover</th>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Catalog</th>
-                <th>Price</th>
-                <th>Description</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pagedBooks.map((book) => (
-                <tr key={book.id}>
-                  <td>
-                    {getBookCover(book) ? (
-                      <img
-                        src={getBookCover(book)}
-                        alt={book.name}
-                        className="thumb"
-                      />
-                    ) : (
-                      '-'
-                    )}
-                  </td>
-                  <td>{book.id}</td>
-                  <td>{book.name}</td>
-                  <td>{getBookCatalog(book) || '-'}</td>
-                  <td>{getBookPrice(book) ? `$${getBookPrice(book)}` : '-'}</td>
-                  <td>{cleanDescription(book.description)}</td>
-                  <td>
-                    <Link to={`/customer/books/${book.id}`} className="link-inline">
-                      Details
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <section className="storefront-product-grid">
+          {pagedBooks.map((book) => (
+            <article key={book.id} className="storefront-product-card">
+              <div className="storefront-cover-wrap">
+                {getBookCover(book) ? (
+                  <img
+                    src={getBookCover(book)}
+                    alt={book.name}
+                    className="storefront-cover"
+                  />
+                ) : (
+                  <div className="storefront-cover placeholder">No image</div>
+                )}
+              </div>
+              <div className="storefront-product-meta">
+                <p className="storefront-chip">{getBookCatalog(book) || 'General'}</p>
+                <h3>{book.name}</h3>
+                <p className="storefront-desc">{cleanDescription(book.description)}</p>
+              </div>
+              <div className="storefront-product-foot">
+                <strong>{getBookPrice(book) ? `$${getBookPrice(book)}` : '$25'}</strong>
+                <Link to={`/customer/books/${book.id}`} className="storefront-cta compact">
+                  View details
+                </Link>
+              </div>
+            </article>
+          ))}
         </section>
         <Pagination
           currentPage={currentPage}
@@ -150,6 +142,6 @@ export default function CatalogPage() {
         />
       </>
       ) : null}
-    </>
+    </div>
   )
 }

@@ -7,6 +7,7 @@ const navByRole = {
   customer: [
     { to: '/customer/home', label: 'Home' },
     { to: '/customer/catalog', label: 'Catalog' },
+    { to: '/customer/chat', label: 'AI Chat' },
     { to: '/customer/cart', label: 'Cart' },
     { to: '/customer/checkout', label: 'Checkout' },
     { to: '/customer/orders', label: 'Orders' },

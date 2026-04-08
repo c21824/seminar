@@ -211,6 +211,26 @@ services:
       - redis
 
 
+  chat-service:
+    build:
+      context: ./services/chat-service
+    environment:
+      CHAT_SERVICE_NAME: chat-service
+      CHAT_SERVICE_PORT: "8000"
+      REDIS_URL: redis://redis:6379/0
+      VECTOR_TOP_K: "5"
+      ALPHA_FUSION: "0.6"
+      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-2.0-flash}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      GEMINI_TIMEOUT_SECONDS: ${GEMINI_TIMEOUT_SECONDS:-20}
+      GEMINI_MAX_RETRIES: ${GEMINI_MAX_RETRIES:-2}
+      GEMINI_RETRY_BACKOFF_SECONDS: ${GEMINI_RETRY_BACKOFF_SECONDS:-1.0}
+    ports:
+      - "8012:8000"
+    depends_on:
+      - redis
+
+
   api-gateway:
     build:
       context: ./services/api-gateway
@@ -220,13 +240,14 @@ services:
       DATABASE_URL: postgres://books:books@postgres:5432/gateway_db
       SERVICE_NAME: api-gateway
       SERVICE_PORT: "8000"
-      GATEWAY_TARGETS: "staff-service:8000,manager-service:8000,customer-service:8000,catalog-service:8000,book-service:8000,cart-service:8000,order-service:8000,ship-service:8000,pay-service:8000,comment-rate-service:8000,recommender-ai-service:8000"
+      GATEWAY_TARGETS: "staff-service:8000,manager-service:8000,customer-service:8000,catalog-service:8000,book-service:8000,cart-service:8000,order-service:8000,ship-service:8000,pay-service:8000,comment-rate-service:8000,recommender-ai-service:8000,chat-service:8000"
     ports:
       - "8000:8000"
     depends_on:
       - postgres
       - rabbitmq
       - redis
+      - chat-service
 
 
   frontend-react:

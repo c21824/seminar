@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import PageHeader from '../../components/PageHeader'
+import { Link, useParams } from 'react-router-dom'
 import { getOrders } from '../../services/api'
 
 export default function OrderDetailPage() {
@@ -14,26 +13,45 @@ export default function OrderDetailPage() {
       .catch(() => setOrder(null))
   }, [id])
 
-  const timeline = ['Order created', 'Payment completed', 'Shipment prepared', 'Delivered']
+  const timeline = [
+    { label: 'Order created', note: 'Your order request was received.' },
+    { label: 'Payment completed', note: 'Payment details were verified.' },
+    { label: 'Shipment prepared', note: 'Warehouse is preparing your package.' },
+    { label: 'Delivered', note: 'Package arrived at destination.' },
+  ]
 
   return (
-    <>
-      <PageHeader title={`Order #${id}`} subtitle="Order and shipment timeline." />
-      <section className="panel-grid">
-        <article className="panel">
-          <h3>Order Information</h3>
+    <div className="storefront-stack">
+      <section className="storefront-section-head compact">
+        <div>
+          <p className="storefront-kicker">Order detail</p>
+          <h1>Order #{id}</h1>
+          <p>Follow each stage from payment confirmation to delivery.</p>
+        </div>
+        <Link to="/customer/orders" className="storefront-cta ghost compact">Back to orders</Link>
+      </section>
+
+      <section className="order-detail-layout">
+        <article className="order-detail-card">
+          <h2>Order information</h2>
           <p><strong>Name:</strong> {order?.name || '-'}</p>
           <p><strong>Description:</strong> {order?.description || '-'}</p>
         </article>
-        <article className="panel">
-          <h3>Shipment Timeline</h3>
-          <ol className="timeline">
-            {timeline.map((step) => (
-              <li key={step}>{step}</li>
+
+        <article className="order-detail-card">
+          <h2>Shipment timeline</h2>
+          <ol className="timeline-modern">
+            {timeline.map((step, index) => (
+              <li key={step.label} className={index < 3 ? 'done' : ''}>
+                <div>
+                  <strong>{step.label}</strong>
+                  <p>{step.note}</p>
+                </div>
+              </li>
             ))}
           </ol>
         </article>
       </section>
-    </>
+    </div>
   )
 }

@@ -69,3 +69,10 @@ export async function createReview(payload) {
     body: JSON.stringify(payload),
   })
 }
+
+export async function getChatRecommendation(payload) {
+  return request('/api/v1/proxy/chat-service/chat/recommend/', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  })
+}

@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import PageHeader from '../../components/PageHeader'
 
 export default function PaymentResultPage() {
   const location = useLocation()
@@ -8,8 +7,14 @@ export default function PaymentResultPage() {
   const status = params.get('status') || 'success'
 
   return (
-    <>
-      <PageHeader title="Payment Result" subtitle="Final checkout state from pay-service." />
+    <div className="storefront-stack">
+      <section className="storefront-section-head compact">
+        <div>
+          <p className="storefront-kicker">Checkout result</p>
+          <h1>{status === 'success' ? 'Payment successful' : 'Payment failed'}</h1>
+          <p>Final checkout state from pay service.</p>
+        </div>
+      </section>
       <section className="result-card">
         <h3>{status === 'success' ? 'Payment Successful' : 'Payment Failed'}</h3>
         <p>
@@ -26,6 +31,6 @@ export default function PaymentResultPage() {
           </Link>
         </div>
       </section>
-    </>
+    </div>
   )
 }

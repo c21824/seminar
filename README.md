@@ -3,10 +3,44 @@
 ## Overview
 This project is a microservice-based book commerce platform with:
 - 11 domain services (Django REST)
+- 1 AI chat service (FastAPI)
 - 1 API Gateway (Django)
 - 1 React frontend with multi-role interfaces
 - PostgreSQL, RabbitMQ, Redis
 - Docker Compose for local deployment
+
+## AI Chatbot Plan and Guide
+- See `AI_CHATBOT_PLAN_GUIDE.md` for architecture plan, schema samples, RAG flow, deep learning personalization, and usage runbook.
+
+## Gemini Configuration for Chat Service
+Use a local `.env` file at project root so secrets are not committed. `.env` is already ignored by git.
+
+1) Open `.env` and set your key:
+
+```env
+GEMINI_API_KEY=<YOUR_GEMINI_API_KEY>
+GEMINI_MODEL=gemini-2.0-flash
+GEMINI_TIMEOUT_SECONDS=20
+GEMINI_MAX_RETRIES=2
+GEMINI_RETRY_BACKOFF_SECONDS=1.0
+```
+
+2) Start or rebuild containers:
+
+```bash
+docker compose up -d --build
+```
+
+3) Test chat endpoint via gateway:
+
+```bash
+curl -X POST http://localhost:8000/api/v1/proxy/chat-service/chat/recommend/ \
+  -H "Content-Type: application/json" \
+  -d '{"user_id":"u_1024","question":"Toi nen doc sach gi?","top_k":3}'
+```
+
+If API key is missing or Gemini call fails after retries/timeouts, `chat-service` automatically falls back to the local rule-based response.
+The response field `source` now includes reason codes such as `mock-fallback:missing_api_key`, `mock-fallback:http_403`, or `mock-fallback:network_or_timeout`.
 
 ## Services
 - staff-service
@@ -20,6 +54,7 @@ This project is a microservice-based book commerce platform with:
 - pay-service
 - comment-rate-service
 - recommender-ai-service
+- chat-service
 - api-gateway
 
 ## Frontend Interfaces Implemented
@@ -80,7 +115,7 @@ docker compose exec -T api-gateway python manage.py migrate --noinput
 curl http://localhost:8000/api/v1/healthz/
 curl http://localhost:8000/api/v1/services-health/
 ```
-Expected: `healthy = 11`, `total = 11`.
+Expected: `healthy = 12`, `total = 12`.
 
 ### 5) Seed sample data and image metadata
 From workspace root:
@@ -102,6 +137,7 @@ Examples:
 - `/api/v1/proxy/book-service/books/`
 - `/api/v1/proxy/order-service/orders/`
 - `/api/v1/proxy/comment-rate-service/reviews/`
+- `/api/v1/proxy/chat-service/chat/recommend/`
 
 ## Frontend Route Map
 - `/auth/login`

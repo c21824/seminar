@@ -53,32 +53,48 @@ export default function LoginPage() {
 
   return (
     <div className="auth-page">
-      <form className="auth-card" onSubmit={onSubmit}>
-        <p className="eyebrow">Authentication</p>
-        <h2>Sign in to BookOps</h2>
-        <label>
-          Email
-          <Input value={email} onChange={(event) => setEmail(event.target.value)} type="email" />
-        </label>
-        <label>
-          Password
-          <Input
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            type="password"
-          />
-        </label>
-        <label>
-          Role
-          <Select value={role} onChange={(event) => setRole(event.target.value)}>
-            <option value="customer">Customer</option>
-            <option value="staff">Staff</option>
-            <option value="manager">Manager</option>
-          </Select>
-        </label>
-        {error ? <p className="form-error">{error}</p> : null}
-        <Button className="w-full" type="submit">Continue</Button>
-      </form>
+      <section className="auth-layout">
+        <aside className="auth-showcase">
+          <p className="storefront-kicker">BookVerse</p>
+          <h1>Welcome back to your next reading journey.</h1>
+          <p>
+            Sign in to browse curated books, manage your cart, and track every order with
+            a customer-first experience.
+          </p>
+          <ul>
+            <li>Personalized catalog discovery</li>
+            <li>Fast checkout flow</li>
+            <li>Clear order tracking timeline</li>
+          </ul>
+        </aside>
+
+        <form className="auth-card" onSubmit={onSubmit}>
+          <p className="eyebrow">Authentication</p>
+          <h2>Sign in to BookOps</h2>
+          <label>
+            Email
+            <Input value={email} onChange={(event) => setEmail(event.target.value)} type="email" />
+          </label>
+          <label>
+            Password
+            <Input
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              type="password"
+            />
+          </label>
+          <label>
+            Role
+            <Select value={role} onChange={(event) => setRole(event.target.value)}>
+              <option value="customer">Customer</option>
+              <option value="staff">Staff</option>
+              <option value="manager">Manager</option>
+            </Select>
+          </label>
+          {error ? <p className="form-error">{error}</p> : null}
+          <Button className="w-full" type="submit">Continue</Button>
+        </form>
+      </section>
     </div>
   )
 }
